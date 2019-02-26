@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="css/pages.css">
+        <title></title>
+    </head>
+    <body>
+        
+        <!--
+        Show tasks
+        -->
+        <div id="showTaskMainDiv" class="showTaskMainDiv">
+            <h2 class="center"> User Created Tasks </h2> 
+            <div id="stacksdiv" class="stackslist">
+                <select id=taskList> </select>
+                <a id="output">Output</a> <br/>
+                <button id="taskTerminate">Delete Task</button>
+            </div>
+            
+            <br/> <br/>
+            
+        </div>       
+
+        <!--
+        Create Task
+        -->
+        <div id="runTaskMainDiv" class="runTaskMainDiv">
+            <h2 class="center">Create Task</h2><br/>
+            <div id="aws-resources">
+                <h3> Task Spec:</h3> <br/> 
+                <label for="cmd"> Command to Run &nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <input type="text" id="cmd" value="ls /tmp" >  <font size="1">command to run.</font>  <br/> <br/>
+            </div><br/> <br/> 
+            <button id="runTask">Run Task</button> 
+        </div>
+        
+        <div id="signing" class="signing">
+            <button id="signOut">Sign Out</button>
+        </div>
+        
+        
+        <script src="js/vendor/jquery-3.1.0.js"></script>
+        <script src="js/vendor/aws-cognito-sdk.min.js"></script>
+        <script src="js/vendor/amazon-cognito-identity.min.js"></script>
+        <script src="js/config.js"></script>
+        <script src="js/cognito-auth.js"></script>
+        <script src="js/resources.js"></script>
+        
+    </body>
+</html>

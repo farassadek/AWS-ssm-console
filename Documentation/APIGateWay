@@ -1,0 +1,13 @@
+
+API GateWay:
+  1) Authorizer: 
+     From Cognito get the user pool name
+  2) Post and Get
+    a) In method request settings Select the name of the Authorization created in step 1
+    b) In integration request , then select Use Lambda and use Lambda proxy integration
+  2) Authorizationto
+    a) Userpool 
+    b) Client ID auth pool
+  3) enable CORS (Access-Control-Allow-Origin ) from the world ? 
+
+

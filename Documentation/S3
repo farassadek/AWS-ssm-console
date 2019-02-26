@@ -1,0 +1,8 @@
+S3:
+  1) Upload the content of the website folder into S3 bucket
+  2) Fix js/config.js to have the PoolId and ClientPoolId
+  3) Make the bucket public
+  4) js/config.js is public??? Security issue ??? NOT based answer on :
+     a) AWS answer on: https://forums.aws.amazon.com/message.jspa?messageID=757990#757990 
+     b) Also answer and solution on : https://github.com/amazon-archives/amazon-cognito-identity-js/issues/312
+

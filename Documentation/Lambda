@@ -1,0 +1,10 @@
+Lambda:
+  1) 
+  2) upload the lambdas in the repository as functions in Lambda
+  3) Lambda needs the role to 
+    a) GetItem and PutItem in DynamoDB
+    b) Manipulate S3 objects
+  4) Test lambda with the testLambda code provided in the test folder
+  5) the Access-Control-Allow-Origin in Lambda (specifically in the return(response))  code was important
+
+

@@ -1,0 +1,12 @@
+
+DynamoDB:
+  1) Create a table with the parameter needed
+  2) Table name will be used in Lambda function
+  3) Table schema : 
+        Table name : tasks
+        Primary Key : taskid
+        SortKey : userid
+        Seconday index : userid-index from userid key
+        Note that : Lambda should have query access to tasks and tasks/*
+
+

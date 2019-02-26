@@ -1,0 +1,7 @@
+Cognito:
+  1) Create pool and name it
+  2) Enable MFA required during the creation process , otherwise the MFA will be optional.
+  3) Use the trigger for more security
+  4) During development time (and it might be on the production too) : on Policies -> check "Only allow administrators to create users"
+
+
