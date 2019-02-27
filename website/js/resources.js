@@ -180,7 +180,7 @@ var ResourceRequest = window.ResourceRequest || {};
 
         $('#runTask').click(handleCreateStackClick);
         $('#taskTerminate').click(handleTerminateTaskClick);
-        $('#taskList').click(handleTaskInfoClick);
+        $('#taskList').change(handleTaskInfoClick);
         
         $('#signOut').click(function() {
             ResourceRequest.signOut();
