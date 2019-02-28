@@ -40,14 +40,29 @@
         <title></title>
     </head>
     <body>
-       <h1>Register New User</h1>
-       <form id="registrationForm">
-         <input type="email" id="emailInputRegister" placeholder="Email" pattern=".*" required> <br/> <br/>
-         <input type="password" id="passwordInputRegister" placeholder="Password" pattern=".*" required> <br/> <br/>
-         <input type="password" id="password2InputRegister" placeholder="Confirm Password" pattern=".*" required> <br/> <br/>
 
-         <input type="submit" value="Register">
-       </form>
+          <div class="form"> 
+
+       <h1>Register New User</h1>
+
+           <form id="registrationForm">
+  <div class="form-group">
+    <label for="emailInputRegister">Email address</label>
+    <input type="email" class="form-control" id="emailInputRegister" placeholder="Email" required>
+  </div>
+  <div class="form-group">
+    <label for="passwordInputRegister">Password</label>
+    <input type="password" class="form-control" id="passwordInputRegister" placeholder="Password" pattern=".*" required>
+  </div>
+    <div class="form-group">
+    <label for="password2InputRegister">Password</label>
+    <input type="password" class="form-control" id="password2InputRegister" placeholder="Confirm Password" pattern=".*" required>
+  </div>
+
+  <button type="submit" class="btn btn-lg btn-primary btn-block">Register</button>
+</form>
+</div>
+
 
         <script src="js/vendor/jquery-3.1.0.js"></script>
         <script src="js/vendor/aws-cognito-sdk.min.js"></script>

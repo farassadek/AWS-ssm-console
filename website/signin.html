@@ -44,21 +44,28 @@
   </head>
 
   <body>
+    <div class="form"> 
+
     <h2>Sign In</h2>
     <form id="signinForm">
-      <input type="email" id="emailInputSignin" placeholder="Email" required>
-      <input type="password" id="passwordInputSignin" placeholder="Password" pattern=".*" required> <br/> <br/>
-      <input type="submit" value="Sign in">
-    </form>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <form method="get" action="register.html">
-        <button type="submit">Register New User </button>
-    </form>
+  <div class="form-group">
+    <label for="emailInputSignin">Email address</label>
+    <input type="email" class="form-control" id="emailInputSignin" aria-describedby="emailHelp" placeholder="Enter email" required>
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group">
+    <label for="passwordInputSignin">Password</label>
+    <input type="password" class="form-control" id="passwordInputSignin" placeholder="Password" pattern=".*" required>
+  </div>
+  <button type="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
+</form>
+    <small id="signinHelp" class="form-text text-muted">New to Task Runner?.</small>
 
+    <form method="get" action="register.html">
+          <button type="submit" class="btn btn-lg btn-primary btn-block">Register New User</button>
+
+    </form>
+</div>
     <script src="js/vendor/jquery-3.1.0.js"></script>
     <script src="js/vendor/aws-cognito-sdk.min.js"></script>
     <script src="js/vendor/amazon-cognito-identity.min.js"></script>

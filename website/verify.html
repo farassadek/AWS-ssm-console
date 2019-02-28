@@ -42,14 +42,23 @@
         <meta name="viewport" content="width=device-width">
     </head>
     <body>
+            <div class="form"> 
+
             <h1>Verify Email</h1>
-            <form id="verifyForm">
-              <input type="email" id="emailInputVerify" placeholder="Email" required> <br/> <br/>
-              <input type="text" id="codeInputVerify" placeholder="Verification Code" pattern=".*" required> <br/> <br/>
 
-              <input type="submit" value="Verify">
-            </form>
 
+    <form id="verifyForm">
+  <div class="form-group">
+    <label for="emailInputVerify">Email address</label>
+    <input type="email" class="form-control" id="emailInputVerify" placeholder="Email" required>
+  </div>
+  <div class="form-group">
+    <label for="codeInputVerify">Password</label>
+    <input type="password" class="form-control" id="codeInputVerify" placeholder="Verification Code" pattern=".*" required>
+  </div>
+  <button type="submit" class="btn btn-lg btn-primary btn-block">Verify</button>
+</form>
+</div>
         <script src="js/vendor/jquery-3.1.0.js"></script>
         <script src="js/vendor/aws-cognito-sdk.min.js"></script>
         <script src="js/vendor/amazon-cognito-identity.min.js"></script>

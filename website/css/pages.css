@@ -1,5 +1,14 @@
 body {
+
+
+}
+.form {
     /*background-color: #f8f9f9;*/
+        width: 100%;
+    max-width: 420px;
+    padding: 15px;
+    margin: auto;
+
 }
 
 h2 {
@@ -7,13 +16,24 @@ h2 {
     margin-left: 20px;*/
 }
 
+.form-signin {
+    width: 100%;
+    max-width: 420px;
+    padding: 15px;
+    margin: auto;
+}
 .btn {
   
   border: none;
   color: white;
   padding: 10px 30px;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 15px;
+}
+
+.btn-block {
+    display: block;
+    width: 50%;
 }
 
 /* Darker background on mouse-over */
