@@ -1,50 +1,106 @@
 <html>
-    <head>
-        <meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="css/pages.css">
-        <title></title>
-    </head>
-    <body>
-        
-        <!--
-        Show tasks
-        -->
-        <div id="showTaskMainDiv" class="showTaskMainDiv">
-            <h2 class="center"> User Created Tasks </h2> 
-            <div id="stacksdiv" class="stackslist">
-                <select id=taskList> </select>
-                <a id="output">Output</a> <br/>
-                <button id="taskTerminate">Delete Task</button>
-            </div>
-            
-            <br/> <br/>
-            
-        </div>       
+   <head>
+      <link rel="stylesheet" type="text/css" href="css/pages.css">
 
-        <!--
-        Create Task
-        -->
-        <div id="runTaskMainDiv" class="runTaskMainDiv">
-            <h2 class="center">Create Task</h2><br/>
-            <div id="aws-resources">
-                <h3> Task Spec:</h3> <br/> 
-                <label for="cmd"> Command to Run &nbsp;&nbsp;&nbsp;&nbsp;</label>
-                <input type="text" id="cmd" value="ls /tmp" >  <font size="1">command to run.</font>  <br/> <br/>
-            </div><br/> <br/> 
-            <button id="runTask">Run Task</button> 
-        </div>
-        
-        <div id="signing" class="signing">
-            <button id="signOut">Sign Out</button>
-        </div>
-        
-        
-        <script src="js/vendor/jquery-3.1.0.js"></script>
-        <script src="js/vendor/aws-cognito-sdk.min.js"></script>
-        <script src="js/vendor/amazon-cognito-identity.min.js"></script>
-        <script src="js/config.js"></script>
-        <script src="js/cognito-auth.js"></script>
-        <script src="js/resources.js"></script>
-        
-    </body>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+      <meta charset="utf-8">
+      <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=PT+Serif|Open+Sans:300,400,600,700,800">
+      <meta charset="utf-8" />
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+      <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+      <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+      <link rel="manifest" href="/site.webmanifest">
+      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+      <meta name="msapplication-TileColor" content="#da532c">
+      <meta name="theme-color" content="#ffffff">
+      <meta
+         name="viewport"
+         content="width=device-width, initial-scale=1, shrink-to-fit=no"
+         />
+      <!--
+         manifest.json provides metadata used when your web app is added to the
+         homescreen on Android. See https://developers.google.com/web/fundamentals/web-app-manifest/
+         -->
+      <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+      <!--
+         Notice the use of %PUBLIC_URL% in the tags above.
+         It will be replaced with the URL of the `public` folder during the build.
+         Only files inside the `public` folder can be referenced from the HTML.
+         
+         Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+         work correctly both with client-side routing and a non-root public URL.
+         Learn how to configure a non-root public URL by running `npm run build`.
+         -->
+      <title>Rake Tasks Runner</title>
+   </head>
+   <body>
+      <div id="signing" class="signing">
+         <button id="signOut" type="button" class="btn btn-primary btn-sm">Sign Out</button>
+      </div>
+      <div class="container px-lg-5">
+         <div class="row mx-lg-n5">
+            <div class="col py-3 px-lg-5 border bg-light">
+               <!--
+                  Show tasks
+                  -->
+               <div id="showTaskMainDiv" class="showTaskMainDiv">
+                  <h2 class="center"> User Created Tasks </h2>
+                  <div  id="stacksdiv">
+                     <div id="stacksdiv" class="input-group mb-3">
+                        <div class="input-group-prepend">
+                           <label class="input-group-text" for="taskList">Tasks</label>
+                                <select class="custom-select" id=taskList >
+                        </select>
+
+                        </div>
+                     </div>
+                     <br/>
+                     <button class="btn"><a id="output" class="fa fa-download"></a> Output</button>
+                     <br/>
+                     <br/>
+
+                     <button id="taskTerminate" type="submit" class="btn btn-primary my-1">Delete Task</button>
+                  </div>
+                  <br/> <br/>
+               </div>
+            </div>
+            <div class="col py-3 px-lg-5 border bg-light">
+               <!--
+                  Create Task
+                  -->
+               <div id="runTaskMainDiv" class="runTaskMainDiv">
+                  <h2 class="center">Create Task</h2>
+                  <br/>
+                  <div id="aws-resources">
+                     <h3></h3>
+                     <br/> 
+                     <label for="cmd"> Command to Run &nbsp;&nbsp;&nbsp;&nbsp;</label>
+
+
+  <select id="cmd" name="commands">
+    <option value="ls /tmp">ls /tmp</option>
+    <option value="RAILS_ENV=production bundle exec rake routes">RAILS_ENV=production bundle exec rake routes</option>
+  </select>
+  <br><br>
+
+
+                     <button id="runTask" type="submit" class="btn btn-primary my-1">Run Task</button> 
+                  </div>
+                  <br/> <br/> 
+               </div>
+            </div>
+         </div>
+      </div>
+      <script src="js/vendor/jquery-3.1.0.js"></script>
+      <script src="js/vendor/aws-cognito-sdk.min.js"></script>
+      <script src="js/vendor/amazon-cognito-identity.min.js"></script>
+      <script src="js/config.js"></script>
+      <script src="js/cognito-auth.js"></script>
+      <script src="js/resources.js"></script>
+   </body>
 </html>

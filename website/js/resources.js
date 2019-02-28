@@ -97,8 +97,9 @@ var ResourceRequest = window.ResourceRequest || {};
        var element = document.getElementById(elementId);
        listLength = dataList.length;
        for(var idx = 0; idx < listLength ; idx++) {
-           var option = '<option value="'+ dataList[idx][attValue] +'">'+ dataList[idx][attName] +'</option>'; 
-           $(option).appendTo(element);
+            var incidx = idx + 1
+           var option = '<option value="'+ dataList[idx][attValue] +'">'+ "Task Run " + incidx +'</option>'; 
+           $(option).appendTo(element).sort(function(a, b){return b - a});
        }
     }
 
@@ -120,6 +121,13 @@ var ResourceRequest = window.ResourceRequest || {};
         });
     }
     
+
+
+function myFunction() {
+  points.sort(function(a, b){return b - a});
+  document.getElementById("demo").innerHTML = points;
+}
+
     //Parse the result to a drop down list
     function fillupUsersResFields (result) {
         if (result){
@@ -129,8 +137,8 @@ var ResourceRequest = window.ResourceRequest || {};
                 var stackno = $("#taskList").children('option').length;
                 if (stackno > 0){ 
                     stackInfo($("#taskList").val(), "tasks");
-                    // Since there is at least one stack then show the stackdiv (resources list, populate and delete functionalities) 
-                    $("#stacksdiv").show();
+
+                  $("#stacksdiv select option:last").attr("selected", "selected").show();
                 }
             }
         }
