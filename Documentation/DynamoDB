@@ -1,12 +1,30 @@
+Check https://github.com/farassadek/AWS-ssm-console/wiki/Dynamodb for details with diagrams.
 
-DynamoDB:
-  1) Create a table with the parameter needed
-  2) Table name will be used in Lambda function
-  3) Table schema : 
-        Table name : tasks
-        Primary Key : taskid
-        SortKey : userid
-        Seconday index : userid-index from userid key
-        Note that : Lambda should have query access to tasks and tasks/*
+Create and Configure Dynamodb:
 
+Create table, name it tasks.
+
+Notes:
+  1) Table name will be used in Lambda function
+  2) Table schema : 
+        Table name: tasks
+        Primary Key: taskid
+        SortKey: userid
+        Secondary index: userid-index from userid key
+  3) Lambda should have query access to tasks and tasks/*
+
+From the AWS console, select DynamoDB from the list of services.
+
+Select Create table.
+  
+
+Enter the Table name and Primary key info with Partition key and sort key (composite) as shown below. Just make sure that userid and
+taskid are in small letters.
+ 
+Scroll to the bottom, ensure that Use default settings is checked, and
+select Create.
+
+From the table console, Create an index from the Indexes tab.
+ 
+ 
 
