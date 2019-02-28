@@ -1,7 +1,36 @@
-Cognito:
-  1) Create pool and name it
-  2) Enable MFA required during the creation process , otherwise the MFA will be optional.
-  3) Use the trigger for more security
-  4) During development time (and it might be on the production too) : on Policies -> check "Only allow administrators to create users"
+reate and Configure Cognito:
 
+Create Pool, name it my-users-pool.
+Create App client, name it my-users-pool-clients.
+Write down the pool name, pool Id, client name and app clients id.
 
+Notes 
+  * Enable MFA if needed.
+  * You can use the trigger for more security
+  * For development we will let user register themselves, on production you might restrict registration by the administrators only (on Policies -> check "Only allow administrators to create users").
+  * If MFA enabled, a Role to allow Amazon Cognito to send SMS messages must be created.
+
+Open Cognito from the Security, Identity, & Compliance group in AWS console
+![Alt text]( "1.png")
+ 
+
+ 
+
+Select Manage User Pools
+ 
+Select Create a user pool
+ Name the user pool and review defaults 
+
+Choose the password strength desired and other sign in behavior.
+Select Username to sign in with an email and select email attribute checkbox.
+Turn MFA off (optional) and select email for verification.
+Review default and create the pool. Take a note of the Pool Id and Pool ARN which will be
+required later. Also, note the region that your User Pool is created in.
+
+Select App clients from the left panel,
+Select Add an app client,
+Enter App client name, 
+Un-select Generate client secret,
+Select Create app client.
+	
+Take note of the App client id.
