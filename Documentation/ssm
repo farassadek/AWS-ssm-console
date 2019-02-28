@@ -1,0 +1,6 @@
+Systems Manager configuration: 
+Configure Systems Manager by installing ssm  agent on EC2 instances you're looking to manage.
+to download and run the SSM installer:
+	sudo yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+to determine if SSM Agent is running:
+	sudo systemctl status amazon-ssm-agent
