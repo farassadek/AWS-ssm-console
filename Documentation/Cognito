@@ -11,7 +11,7 @@ Notes
   * If MFA enabled, a Role to allow Amazon Cognito to send SMS messages must be created.
 
 Open Cognito from the Security, Identity, & Compliance group in AWS console
-![Alt text]( "1.png")
+![Alt text](AWS-ssm-console/Documentation/images/cognito/1.png "1.png")
  
 
  
