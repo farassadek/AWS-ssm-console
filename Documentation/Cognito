@@ -14,7 +14,7 @@ Open Cognito from the Security, Identity, & Compliance group in AWS console
 
 <img src="https://raw.githubusercontent.com/farassadek/AWS-ssm-console/blob/master/Documentation/images/cognito/1.png?sanitize=true&raw=true" />
 
-
+![diagram](https://raw.githubusercontent.com/farassadek/AWS-ssm-console/master/Documentation/images/cognito/1.png)
 Select Manage User Pools
  
 Select Create a user pool
