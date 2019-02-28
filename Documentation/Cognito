@@ -1,4 +1,6 @@
-reate and Configure Cognito:
+Check https://github.com/farassadek/AWS-ssm-console/wiki/Cognito for details with diagrams.
+
+Create and Configure Cognito:
 
 Create Pool, name it my-users-pool.
 Create App client, name it my-users-pool-clients.
