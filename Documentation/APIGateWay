@@ -1,13 +1,32 @@
+Check https://github.com/farassadek/AWS-ssm-console/wiki/APIGateway for details with diagrams.
 
-API GateWay:
-  1) Authorizer: 
+Create and Configure API Gateway:
+
+Create API Gateway, name it tasks-api.
+
+Notes:
+  1) Authorizers: 
      From Cognito get the user pool name
-  2) Post and Get
-    a) In method request settings Select the name of the Authorization created in step 1
-    b) In integration request , then select Use Lambda and use Lambda proxy integration
-  2) Authorizationto
+  2) Authorization
     a) Userpool 
     b) Client ID auth pool
-  3) enable CORS (Access-Control-Allow-Origin ) from the world ? 
+ 
+  2) Post and Get
+    a) In method request settings Select the name of the Authorization created in step 1
+ 
+    b) In integration request, then select Use Lambda and use Lambda proxy integration
+ 
+  3) enable CORS (Access-Control-Allow-Origin)
 
+From the AWS console, select API Gateway from the list of services.
 
+Select Create API. Select REST API and give it a name.
+ 
+
+Then select Create API.
+
+From root path, from Actions, Create Resource and name it same names as lambda functions. Each has a Method as shown below.
+
+ 
+
+For configuring each method, follow the steps in notes above.
