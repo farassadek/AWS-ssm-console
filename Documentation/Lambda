@@ -1,10 +1,27 @@
-Lambda:
-  1) 
-  2) upload the lambdas in the repository as functions in Lambda
-  3) Lambda needs the role to 
-    a) GetItem and PutItem in DynamoDB
-    b) Manipulate S3 objects
-  4) Test lambda with the testLambda code provided in the test folder
-  5) the Access-Control-Allow-Origin in Lambda (specifically in the return(response))  code was important
+Check https://github.com/farassadek/AWS-ssm-console/wiki/Lambda for details with diagrams.
 
+Create and Configure Lambda:
+
+Create 4 Lambda Functions, name them as follows:
+
+1.	getUserTasks		Python 3.7	
+2.	runtask		Python 3.7	
+3.	infotask		Python 3.7	
+4.	termtask		Python 3.7
+
+Notes:
+  1) Lambda needs the role to 
+    a) Full access to S3
+    b) Full access to DynamoDB
+    c) Full access to systems manager (ssm)
+  2) Test lambda with the testLambda code provided in the test folder
+
+From the AWS console, select Lambda from the list of services.
+
+Select Create Function.
+Name them as listed above with the corresponding Runtime and select the Role you’ve created.
+
+ 
+Then select Create Function.
+Repeat for the other 3 lambdas.
 
