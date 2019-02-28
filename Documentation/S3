@@ -1,8 +1,37 @@
+Check https://github.com/farassadek/AWS-ssm-console/wiki/S3 for details with diagrams.
+
+reate and Configure S3:
+
+Create s3 Bucket, name it tasks-uploads-app.
+
 S3:
-  1) Upload the content of the website folder into S3 bucket
-  2) Fix js/config.js to have the PoolId and ClientPoolId
-  3) Make the bucket public
-  4) js/config.js is public??? Security issue ??? NOT based answer on :
-     a) AWS answer on: https://forums.aws.amazon.com/message.jspa?messageID=757990#757990 
-     b) Also answer and solution on : https://github.com/amazon-archives/amazon-cognito-identity-js/issues/312
+  1) Modify js/config.js to have the PoolId and ClientPoolId and API Gateway ARN
+
+From the AWS console, select S3 from the list of services.
+
+Select Create Bucket.
+Pick a name of the bucket and select a region. Then select Create.
+Make a note of the name and region.
+Step through the next steps and leave the defaults by clicking Next except for “Set Permissions” make sure to unselect the Manage public access control lists (ACLs) for this bucket”, and then click Create.
+ 
+
+Select the bucket we just created.
+
+Select the Permissions tab, then select CORS configuration.
+
+Paste the following and save:
+<CORSConfiguration>
+<CORSRule>
+ <AllowedOrigin>*</AllowedOrigin>
+ <AllowedMethod>GET</AllowedMethod>
+ <AllowedMethod>PUT</AllowedMethod>
+ <AllowedMethod>POST</AllowedMethod>
+ <AllowedMethod>HEAD</AllowedMethod>
+ <AllowedMethod>DELETE</AllowedMethod>
+ <MaxAgeSeconds>3000</MaxAgeSeconds>
+ <AllowedHeader>*</AllowedHeader>
+</CORSRule>
+</CORSConfiguration>
+
+
 
