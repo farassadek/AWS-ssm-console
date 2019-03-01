@@ -16,7 +16,7 @@ def test_auth(event):
 
 # Get the talbe from dynamoDB
 def dynamoDBtbl(tablename):
-    dynamodb = boto3.resource("dynamodb", region_name='us-east-1')
+    dynamodb = boto3.resource("dynamodb", region_name='us-west-2')
     table = dynamodb.Table(tablename)
     return(table)
 
@@ -53,18 +53,23 @@ def readFromDB(table, userid , tablename, taskid):
 
 
 def getTaskInfo (userid,taskid,BUCKET_NAME):
-    
-    s3client    = boto3.client('s3')
     s3resource  = boto3.resource('s3')                                                                             
-
     # Get path based on the taskid
     path = userid + "/" + taskid
-    
     # Get the real path (this need to be revisited as it work with one object only)
     bucket = s3resource.Bucket(BUCKET_NAME)
+    error = ""
+    output= ""
     for obj in bucket.objects.filter(Prefix=path):
         key = obj.key
-        
+        if "stderr" in key:
+            error =  signedURL(BUCKET_NAME, key)
+        else:
+            output =  signedURL(BUCKET_NAME, key)
+    return((output, error))
+
+def signedURL(BUCKET_NAME, key):
+    s3client    = boto3.client('s3')
     # Generate the URL to get 'key-name' from 'bucket-name'
     url = s3client.generate_presigned_url(
         ClientMethod='get_object',
@@ -73,24 +78,7 @@ def getTaskInfo (userid,taskid,BUCKET_NAME):
                 'Key': key
             }
     )
-    return(url)
-
-
-def getTaskInfoOld (userid,taskid,BUCKET_NAME):
-    client = boto3.client('s3') #low-level functional API
-    s3 = boto3.resource('s3')                                                                             
-    bucket = s3.Bucket(BUCKET_NAME)
-    
-    path = userid + "/" + taskid
-    
-    for obj in bucket.objects.filter(Prefix=path):
-        key = obj.key
-    
-    obj = client.get_object(Bucket=BUCKET_NAME, Key=key)
-    body = obj['Body'].read()
-    return (body)
-
-
+    return (url)
 
 def myconverter(o):
     if isinstance(o, datetime.datetime):
@@ -130,13 +118,11 @@ def lambda_handler(event, context):
     # Get user tasks
     taskowner  = readFromDB(table, userid , tablename, taskid)
 
-    BUCKET_NAME= "tasks-uploads"
+    BUCKET_NAME= "tasks-uploads-app"
 
     if taskowner == userid:
-        desTask = getTaskInfo (userid,taskid,BUCKET_NAME)
-        data = {}
-        data['url'] = desTask
-        #desTask = str(desTask,'utf-8')
+        (output,error) = getTaskInfo (userid,taskid,BUCKET_NAME)
+        data = {'url': {'output': output, 'error':error} }
         return {
             "statusCode": 200,
             "body": json.dumps(data, default=myconverter ,indent=4, cls=DecimalEncoder),
@@ -155,4 +141,3 @@ def lambda_handler(event, context):
                'Access-Control-Allow-Origin': '*' 
             }
         }
-

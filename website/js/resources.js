@@ -139,9 +139,8 @@ function myFunction() {
                 fillUpDropDownList('taskList', resultJSON['resources'], "taskid", "taskid");
                 var stackno = $("#taskList").children('option').length;
                 if (stackno > 0){ 
+                    $("#stacksdiv select option:last").attr("selected", "selected").show();
                     stackInfo($("#taskList").val(), "tasks");
-
-                  $("#stacksdiv select option:last").attr("selected", "selected").show();
                 }
             }
         }
@@ -149,7 +148,6 @@ function myFunction() {
 
     // Information about the selected stack ID 
     function stackInfo(taskid,taskstable){
-        console.log(taskid);
         $.ajax({
             method: 'POST',
             url: _config.api.invokeUrl + '/infotask',
@@ -174,9 +172,21 @@ function myFunction() {
 
     //Parse the result and inserted to a table
     function completeStackInfos (result,stackstable) {
-        console.log(result['url']);
-        document.getElementById("output").setAttribute("href",result['url']);
+        console.log(result['url']['output']);
+        if (result['url']['output']){
+            document.getElementById("output").setAttribute("href",result['url']['output']);
+        }
+        else {
+            document.getElementById("output").removeAttribute("href");
+        }
+        if (result['url']['error']){
+            document.getElementById("error").setAttribute("href",result['url']['error']);
+        }
+        else {
+            document.getElementById("error").removeAttribute("href");
+        }
     }
+
     
     function initTags() {
         $("#stacksdiv").hide();
@@ -194,6 +204,7 @@ function myFunction() {
         $('#runTask').click(handleCreateStackClick);
         $('#taskTerminate').click(handleTerminateTaskClick);
         $('#taskList').change(handleTaskInfoClick);
+        $('#taskList').click(handleTaskInfoClick);
         
         $('#signOut').click(function() {
             ResourceRequest.signOut();
