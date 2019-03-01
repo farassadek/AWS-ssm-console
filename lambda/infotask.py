@@ -15,8 +15,8 @@ def test_auth(event):
         return(False)
 
 # Get the talbe from dynamoDB
-def dynamoDBtbl(tablename):
-    dynamodb = boto3.resource("dynamodb", region_name='us-west-2')
+def dynamoDBtbl(tablename,region):
+    dynamodb = boto3.resource("dynamodb", region_name=region)
     table = dynamodb.Table(tablename)
     return(table)
 
@@ -112,8 +112,8 @@ def lambda_handler(event, context):
 
 
     userid = username
-    
-    table = dynamoDBtbl(tablename)
+    region = 'us-west-2'
+    table = dynamoDBtbl(tablename,region)
 
     # Get user tasks
     taskowner  = readFromDB(table, userid , tablename, taskid)
