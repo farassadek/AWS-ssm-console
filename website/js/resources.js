@@ -28,6 +28,7 @@ var ResourceRequest = window.ResourceRequest || {};
         // Get and populate the user created resources
         //getUserTasks();
         cmd      = $('#cmd').val()      ;
+        console.log(cmd);
         return true;
     }
 
@@ -97,9 +98,11 @@ var ResourceRequest = window.ResourceRequest || {};
        var element = document.getElementById(elementId);
        listLength = dataList.length;
        for(var idx = 0; idx < listLength ; idx++) {
-            var incidx = idx + 1
-           var option = '<option value="'+ dataList[idx][attValue] +'">'+ "Task Run " + incidx +'</option>'; 
-           $(option).appendTo(element).sort(function(a, b){return b - a});
+            var incidx = idx + 1;
+            //var option = '<option value="'+ dataList[idx][attValue] +'">'+ "Task Run " + idx +'</option>'; 
+            var option = '<option value="'+ dataList[idx][attValue] +'">'+ dataList[idx][attValue] +'</option>'; 
+            $(option).appendTo(element);
+            //$(option).appendTo(element).sort(function(a, b){return b - a});
        }
     }
 
@@ -146,6 +149,7 @@ function myFunction() {
 
     // Information about the selected stack ID 
     function stackInfo(taskid,taskstable){
+        console.log(taskid);
         $.ajax({
             method: 'POST',
             url: _config.api.invokeUrl + '/infotask',
@@ -170,6 +174,7 @@ function myFunction() {
 
     //Parse the result and inserted to a table
     function completeStackInfos (result,stackstable) {
+        console.log(result['url']);
         document.getElementById("output").setAttribute("href",result['url']);
     }
     
