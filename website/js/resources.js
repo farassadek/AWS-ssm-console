@@ -36,6 +36,7 @@ var ResourceRequest = window.ResourceRequest || {};
     function createResources() {
 
         cmd     = $('#cmd').val()     ;
+        env     = $('#env').val()     ;
 
         if (validParams()){
             $.ajax({
@@ -48,6 +49,7 @@ var ResourceRequest = window.ResourceRequest || {};
                 data: JSON.stringify({
                     Resource: {
                         CMD: cmd,
+                        ENV: env,
                     }
                 }),
                 contentType: 'application/json',

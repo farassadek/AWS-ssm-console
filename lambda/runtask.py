@@ -122,7 +122,8 @@ def insertToDB(table, taskid, userid):
 # Check if the user submit valid parameters
 def checkTaskParams(taskParams):
     cmd     = taskParams['Resource']['CMD']
-    if cmd:
+    environ = taskParams['Resource']['ENV']
+    if cmd and environ:
         return (True)
     else:
         return (False)
@@ -131,7 +132,7 @@ def checkTaskParams(taskParams):
 # Create the task with task id = taskid
 def createTask (userid, taskParams,BUCKET_NAME,region):
     command = taskParams['Resource']['CMD']
-    environ = 'cron01-serge'
+    environ = taskParams['Resource']['ENV']
     task    = runOneTask(userid, command, environ,BUCKET_NAME,region)
     taskid  = task['Command']['CommandId']
     return(taskid)
