@@ -65,6 +65,7 @@ def lambda_handler(event, context):
             # Insert new field for the users' new task
             dynamoDBresponse = insertToDB(table, taskid, datenow, userid)
             dynamoDBresponseCode = int(dynamoDBresponse["ResponseMetadata"]["HTTPStatusCode"])
+
             return {
                 "statusCode": dynamoDBresponseCode,
                 "body": json.dumps("Your task is created, please allow few minutes for it to be ready", indent=4, cls=DecimalEncoder),
@@ -143,5 +144,7 @@ def createTask (userid, taskParams,BUCKET_NAME,region):
 
 def runOneTask(userid, cmd, environ, BUCKET_NAME,region):
         ssmclient = boto3.client('ssm', region_name=region)
-        task = ssmclient.send_command(Parameters={'commands': [cmd,]},Targets=[{'Key': 'tag:Name','Values': [environ,]},],DocumentName='AWS-RunShellScript',DocumentVersion='$LATEST',OutputS3BucketName=BUCKET_NAME,OutputS3KeyPrefix=userid,CloudWatchOutputConfig={'CloudWatchLogGroupName': 'agentstatus','CloudWatchOutputEnabled': True})
+        # remove single quotes 
+        command = cmd [1:-1]
+        task = ssmclient.send_command(Parameters={'commands': [command,]},Targets=[{'Key': 'tag:Name','Values': [environ,]},],DocumentName='AWS-RunShellScript',DocumentVersion='$LATEST',OutputS3BucketName=BUCKET_NAME,OutputS3KeyPrefix=userid,CloudWatchOutputConfig={'CloudWatchLogGroupName': 'agentstatus','CloudWatchOutputEnabled': True})
         return (task)
