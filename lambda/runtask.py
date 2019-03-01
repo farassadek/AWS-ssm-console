@@ -59,7 +59,7 @@ def lambda_handler(event, context):
         indexname = 'userid-index'
 
         # Creating new task
-        taskid = createTask (userid, taskParams,BUCKET_NAME)
+        taskid = createTask (userid, taskParams,BUCKET_NAME,region)
         #taskResponseCode =  int(taskresponse["ResponseMetadata"]["HTTPStatusCode"])
         if taskid:
             # Insert new field for the users' new task
@@ -129,15 +129,15 @@ def checkTaskParams(taskParams):
 
 
 # Create the task with task id = taskid
-def createTask (userid, taskParams,BUCKET_NAME):
+def createTask (userid, taskParams,BUCKET_NAME,region):
     command = taskParams['Resource']['CMD']
     environ = 'cron01-serge'
-    task    = runOneTask(userid, command, environ,BUCKET_NAME)
+    task    = runOneTask(userid, command, environ,BUCKET_NAME,region)
     taskid  = task['Command']['CommandId']
     return(taskid)
     
 
-def runOneTask(userid, cmd, environ, BUCKET_NAME):
-        ssmclient = boto3.client('ssm', region_name="us-west-2")
+def runOneTask(userid, cmd, environ, BUCKET_NAME,region):
+        ssmclient = boto3.client('ssm', region_name=region)
         task = ssmclient.send_command(Parameters={'commands': [cmd,]},Targets=[{'Key': 'tag:Name','Values': [environ,]},],DocumentName='AWS-RunShellScript',DocumentVersion='$LATEST',OutputS3BucketName=BUCKET_NAME,OutputS3KeyPrefix=userid,CloudWatchOutputConfig={'CloudWatchLogGroupName': 'agentstatus','CloudWatchOutputEnabled': True})
         return (task)
