@@ -14,6 +14,7 @@ def test_auth(event):
     except:
         return(False)
         
+
 # Get the talbe from dynamoDB
 def dynamoDBtbl(tablename,region):
     dynamodb = boto3.resource("dynamodb", region_name=region)

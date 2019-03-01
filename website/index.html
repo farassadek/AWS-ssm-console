@@ -77,12 +77,12 @@
                      <h3></h3>
                      <br/> 
                      <label for="env"> Environment tag &nbsp;&nbsp;&nbsp;&nbsp;</label>
-                     <input type="text" id="env" value="Environment Tag" >  <br/> <br/>
+                     <input type="text" id="env" value="Environment Tag" >  <br/> <br/> 
                      <br/>
                      <label for="cmd"> Command to Run &nbsp;&nbsp;&nbsp;&nbsp;</label>
                      <select id="cmd" name="commands">
                         <option value="ls /tmp">ls /tmp</option>
-                        <option value="RAILS_ENV=production bundle exec rake routes">ls /</option>
+                        <option value="RAILS_ENV=production bundle exec rake routes">RAILS_ENV=production bundle exec rake routes</option>
                      </select>
                      <br><br>
                      <button id="runTask" type="submit" class="btn btn-primary my-1">Run Task</button> 

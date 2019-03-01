@@ -57,7 +57,7 @@ def lambda_handler(event, context):
     # Get user tasks
     usertasks = getUserTasks (userid, table)
     sendUserTasks = {"resources" : usertasks['Items'],}
-    
+
     return {
         "statusCode": 200,
         "body": json.dumps(sendUserTasks, indent=4, cls=DecimalEncoder),

@@ -1,0 +1,19 @@
+{
+  "path": "/terminate",
+  "httpMethod": "POST",
+  "headers": {
+    "Accept": "*/*",
+    "Authorization": "eyJraWQiOiJLTzRVMWZs",
+    "content-type": "application/json; charset=UTF-8"
+  },
+  "queryStringParameters": null,
+  "pathParameters": null,
+  "requestContext": {
+    "authorizer": {
+      "claims": {
+        "cognito:username": "fadwakhalil@gmail.com"
+      }
+    }
+  },
+  "body": "{\"Resource\":{\"taskid\":\"1d045c12-ef3a-45c0-b5d3-0519dbed9ea9\"}}"
+}

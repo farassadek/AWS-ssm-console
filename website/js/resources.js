@@ -100,11 +100,12 @@ var ResourceRequest = window.ResourceRequest || {};
        var element = document.getElementById(elementId);
        listLength = dataList.length;
        for(var idx = 0; idx < listLength ; idx++) {
-            var incidx = idx + 1;
-            //var option = '<option value="'+ dataList[idx][attValue] +'">'+ "Task Run " + idx +'</option>'; 
-            var option = '<option value="'+ dataList[idx][attValue] +'">'+ dataList[idx][attValue] +'</option>'; 
+            var datenow = dataList[idx][attName]
+
+            var option = '<option value="'+ dataList[idx][attValue] +'">'+ datenow +'</option>'; 
             $(option).appendTo(element);
             //$(option).appendTo(element).sort(function(a, b){return b - a});
+            //$(option).appendTo(element).sort();
        }
     }
 
@@ -138,7 +139,7 @@ function myFunction() {
         if (result){
             var resultJSON = result;
             if (resultJSON['resources']){
-                fillUpDropDownList('taskList', resultJSON['resources'], "taskid", "taskid");
+                fillUpDropDownList('taskList', resultJSON['resources'], "taskid", "datenow");
                 var stackno = $("#taskList").children('option').length;
                 if (stackno > 0){ 
                     $("#stacksdiv select option:last").attr("selected", "selected").show();
