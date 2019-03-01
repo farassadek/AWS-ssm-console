@@ -1,4 +1,3 @@
-
 import logging
 import json
 
@@ -15,9 +14,10 @@ def test_auth(event):
     except:
         return(False)
         
-def dynamoDBtbl():
-    dynamodb = boto3.resource("dynamodb", region_name='us-east-1')
-    table = dynamodb.Table('tasks')
+# Get the talbe from dynamoDB
+def dynamoDBtbl(tablename,region):
+    dynamodb = boto3.resource("dynamodb", region_name=region)
+    table = dynamodb.Table(tablename)
     return(table)
 
 
@@ -32,10 +32,9 @@ class DecimalEncoder(json.JSONEncoder):
 
 
 # Search database for task with taskid and check if it belong to the userid
-def checkUserTaskOwnership(table, userid , tablename, taskid):
+def checkUserTaskOwnership(table, userid, taskid):
     try:
         response = table.query (
-            TableName=tablename,
             KeyConditionExpression=Key('taskid').eq(taskid)
         )
     except botocore.exceptions.ClientError as e:
@@ -105,13 +104,13 @@ def lambda_handler(event, context):
         }
 
     userid = username
-    table = dynamoDBtbl()
+    region = 'us-west-2'
+    tablename = "tasks"
+    BUCKET_NAME = "tasks-uploads-app"
+    table = dynamoDBtbl(tablename,region)
 
-    # Get user tasks
-    tablename = 'tasks'
-    BUCKET_NAME = "tasks-uploads"
     
-    if checkUserTaskOwnership(table, userid , tablename, taskid):
+    if checkUserTaskOwnership(table, userid, taskid):
         updResp=False
         terRes = terminateusertask(userid,taskid,BUCKET_NAME)
         if terRes:

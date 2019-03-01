@@ -18,10 +18,13 @@ def test_auth(event):
     except:
         return(False)
         
-def dynamoDBtbl(tableName):
-    dynamodb = boto3.resource("dynamodb", region_name='us-east-1')
-    table = dynamodb.Table(tableName)
+
+# Get the talbe from dynamoDB
+def dynamoDBtbl(tablename,region):
+    dynamodb = boto3.resource("dynamodb", region_name=region)
+    table = dynamodb.Table(tablename)
     return(table)
+
 
 class DecimalEncoder(json.JSONEncoder):
     def default(self, o):
@@ -47,9 +50,12 @@ def lambda_handler(event, context):
     
     username = event['requestContext']['authorizer']['claims']['cognito:username']
     userid = username
+    tablename = 'tasks'
+    region = 'us-west-2'
+    table = dynamoDBtbl(tablename,region)
 
     # Get user tasks
-    usertasks = getUserTasks (userid, 'tasks')
+    usertasks = getUserTasks (userid, table)
     sendUserTasks = {"resources" : usertasks['Items'],}
     
     return {
@@ -62,20 +68,18 @@ def lambda_handler(event, context):
     }
 
 # Get user Tasks
-def getUserTasks (userid, tablename):
-    table = dynamoDBtbl(tablename)
+def getUserTasks (userid, table):
     keyname   = 'userid'
     indexname = 'userid-index'
-    response  = readFromDB(table, userid , tablename, keyname, indexname)
+    response  = readFromDB(table, userid, keyname, indexname)
     return (response)
 
 # Search the user (with userid) tasks
-def readFromDB(table, userid , tablename, keyname, indexname):
+def readFromDB(table, userid, keyname, indexname):
     keyValue = userid
     keyName = keyname
     try:
         response = table.query (
-            TableName=tablename,
             IndexName=indexname,
             KeyConditionExpression=Key(keyName).eq(keyValue)
         )
@@ -83,3 +87,4 @@ def readFromDB(table, userid , tablename, keyname, indexname):
         print(e.response['Error']['Message'])
     else:
         return (response)
+

@@ -20,10 +20,14 @@ def test_auth(event):
     except:
         return(False)
         
-def dynamoDBtbl():
-    dynamodb = boto3.resource("dynamodb", region_name='us-east-1')
-    table = dynamodb.Table('tasks')
+
+# Get the talbe from dynamoDB
+def dynamoDBtbl(tablename,region):
+    dynamodb = boto3.resource("dynamodb", region_name=region)
+    table = dynamodb.Table(tablename)
     return(table)
+
+
     
 def lambda_handler(event, context):
     if (not test_auth(event)):
@@ -37,24 +41,25 @@ def lambda_handler(event, context):
     }
     
     username = event['requestContext']['authorizer']['claims']['cognito:username']
-    userid = username
     
     taskParams = json.loads(event['body'])
     
-    response = ""
-    
     checkresparm = checkTaskParams(taskParams)
     
+    userid = username
+    region = 'us-west-2'
+    tablename = "tasks"
+    BUCKET_NAME = 'tasks-uploads-app'
+
     if (checkresparm):
-        table = dynamoDBtbl()
+        table = dynamoDBtbl(tablename,region)
     
         # Get user tasks
-        tablename = 'tasks'
         keyname   = 'userid'
         indexname = 'userid-index'
 
         # Creating new task
-        taskid = createTask (userid, taskParams)
+        taskid = createTask (userid, taskParams,BUCKET_NAME)
         #taskResponseCode =  int(taskresponse["ResponseMetadata"]["HTTPStatusCode"])
         if taskid:
             # Insert new field for the users' new task
@@ -124,39 +129,15 @@ def checkTaskParams(taskParams):
 
 
 # Create the task with task id = taskid
-def createTask (userid, taskParams):
+def createTask (userid, taskParams,BUCKET_NAME):
     command = taskParams['Resource']['CMD']
-    environ = 'Public_1a_AdminEC2'
-    task    = runOneTask(userid, command, environ)
+    environ = 'cron01-serge'
+    task    = runOneTask(userid, command, environ,BUCKET_NAME)
     taskid  = task['Command']['CommandId']
     return(taskid)
     
 
-def runOneTask(userid, cmd, environ):
-        ssmclient = boto3.client('ssm', region_name="us-east-1")
-        AWS_BUCKET_NAME = 'tasks-uploads'
-        task = ssmclient.send_command(Parameters={'commands': [cmd,]},Targets=[{'Key': 'tag:Name','Values': [environ,]},],DocumentName='AWS-RunShellScript',DocumentVersion='$LATEST',OutputS3BucketName=AWS_BUCKET_NAME,OutputS3KeyPrefix=userid,CloudWatchOutputConfig={'CloudWatchLogGroupName': 'agentstatus','CloudWatchOutputEnabled': True})
+def runOneTask(userid, cmd, environ, BUCKET_NAME):
+        ssmclient = boto3.client('ssm', region_name="us-west-2")
+        task = ssmclient.send_command(Parameters={'commands': [cmd,]},Targets=[{'Key': 'tag:Name','Values': [environ,]},],DocumentName='AWS-RunShellScript',DocumentVersion='$LATEST',OutputS3BucketName=BUCKET_NAME,OutputS3KeyPrefix=userid,CloudWatchOutputConfig={'CloudWatchLogGroupName': 'agentstatus','CloudWatchOutputEnabled': True})
         return (task)
-
-
-def save_file_to_bucket(userid, taskid, BUCKET_NAME, FILE_NAME):
-    s3 = boto3.resource('s3')
-    bucket = s3.Bucket(BUCKET_NAME)
-    path = userid + "/" + taskid + "/" + FILE_NAME
-    data = path
-    bucket.put_object(
-        #ACL='public-read',
-        #ContentType='application/json',
-        Key=path,
-        Body=data,
-    )
-
-    body = {
-        "uploaded": "true",
-        "bucket": BUCKET_NAME,
-        "path": path,
-    }
-    return {
-        "statusCode": 200,
-        "body": json.dumps(body)
-    }
