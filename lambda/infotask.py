@@ -43,8 +43,9 @@ def readFromDB(table, userid , tablename, taskid):
         print(e.response['Error']['Message'])
     else:
         if response:
+
             if len(response['Items']) > 0:
-                return (response['Items'][0]['userid'])
+                return (response)
             else:
                 # The taskid have no userid in the database
                 return("Task belong to no body")
@@ -116,13 +117,14 @@ def lambda_handler(event, context):
     table = dynamoDBtbl(tablename,region)
 
     # Get user tasks
-    taskowner  = readFromDB(table, userid , tablename, taskid)
-
+    response  = readFromDB(table, userid , tablename, taskid)
+    taskowner = response['Items'][0]['userid']
+    
     BUCKET_NAME= "tasks-uploads-app"
 
     if taskowner == userid:
         (output,error) = getTaskInfo (userid,taskid,BUCKET_NAME)
-        data = {'url': {'output': output, 'error':error} }
+        data = {'url': {'output': output, 'error':error} , 'response':response['Items'][0]}
         return {
             "statusCode": 200,
             "body": json.dumps(data, default=myconverter ,indent=4, cls=DecimalEncoder),

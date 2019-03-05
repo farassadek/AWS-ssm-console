@@ -87,4 +87,3 @@ def readFromDB(table, userid, keyname, indexname):
         print(e.response['Error']['Message'])
     else:
         return (response)
-

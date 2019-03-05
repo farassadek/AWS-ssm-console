@@ -59,11 +59,11 @@ def lambda_handler(event, context):
         indexname = 'userid-index'
 
         # Creating new task
-        (taskid,datenow) = createTask (userid, taskParams,BUCKET_NAME,region)
+        (taskid,datenow,command,environ) = createTask (userid, taskParams,BUCKET_NAME,region)
         #taskResponseCode =  int(taskresponse["ResponseMetadata"]["HTTPStatusCode"])
         if taskid:
             # Insert new field for the users' new task
-            dynamoDBresponse = insertToDB(table, taskid, datenow, userid)
+            dynamoDBresponse = insertToDB(table, taskid, datenow, userid,command,environ)
             dynamoDBresponseCode = int(dynamoDBresponse["ResponseMetadata"]["HTTPStatusCode"])
 
             return {
@@ -106,13 +106,15 @@ class DecimalEncoder(json.JSONEncoder):
 
      
 # Search the user (with userid) tasks
-def insertToDB(table, taskid,datenow, userid):
+def insertToDB(table, taskid,datenow, userid, command, environ):
     try:
         response = table.put_item(
             Item={
                 'taskid': taskid,
                 'userid': userid,
-                'datenow': datenow
+                'datenow': datenow,
+                'command': command,
+                'environ': environ
             }
         )
     except botocore.exceptions.ClientError as e:
@@ -139,7 +141,7 @@ def createTask (userid, taskParams,BUCKET_NAME,region):
     taskid  = task['Command']['CommandId']
     #datenow = str(datetime.now()).replace(' ', '_')
     datenow = str(datetime.now())
-    return((taskid,datenow))
+    return((taskid,datenow,command,environ))
     
 
 def runOneTask(userid, cmd, environ, BUCKET_NAME,region):
