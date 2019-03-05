@@ -65,6 +65,7 @@ var ResourceRequest = window.ResourceRequest || {};
 
     function completeCreateResources (result) {
         alert ("Wait for few minutes for you stack to be ready.");
+        $('.modal').modal('show');
         $("#runTask").attr("disabled", false);
         setTimeout(waittoreloadpage, 500);
     }
@@ -101,11 +102,15 @@ var ResourceRequest = window.ResourceRequest || {};
        listLength = dataList.length;
        for(var idx = 0; idx < listLength ; idx++) {
             var datenow = dataList[idx][attName]
+            var command = dataList[idx]["command"]            
+            var env = dataList[idx]["env"]
 
             var option = '<option value="'+ dataList[idx][attValue] +'">'+ datenow +'</option>'; 
             $(option).appendTo(element);
             //$(option).appendTo(element).sort(function(a, b){return b - a});
             //$(option).appendTo(element).sort();
+            //$('#span-select').textContent = "firas";
+            $('.modal').modal('hide');
        }
     }
 
@@ -139,7 +144,7 @@ function myFunction() {
         if (result){
             var resultJSON = result;
             if (resultJSON['resources']){
-                fillUpDropDownList('taskList', resultJSON['resources'], "taskid", "datenow");
+                fillUpDropDownList('taskList', resultJSON['resources'], "taskid", "datenow","command","environ");
                 var stackno = $("#taskList").children('option').length;
                 if (stackno > 0){ 
                     $("#stacksdiv select option:last").attr("selected", "selected").show();
@@ -175,7 +180,7 @@ function myFunction() {
 
     //Parse the result and inserted to a table
     function completeStackInfos (result,stackstable) {
-        console.log(result['url']['output']);
+        console.log(result);
         if (result['url']['output']){
             document.getElementById("output").setAttribute("href",result['url']['output']);
         }
@@ -188,6 +193,9 @@ function myFunction() {
         else {
             document.getElementById("error").removeAttribute("href");
         }
+        document.getElementById("taskcmd").value=result['response']['command'];
+        document.getElementById("taskenv").value=result['response']['environ'];
+
     }
 
     
@@ -205,6 +213,8 @@ function myFunction() {
         getUserTasks();
 
         $('#runTask').click(handleCreateStackClick);
+        //$('#spin').click(handleSpinnerClick);
+
         $('#taskTerminate').click(handleTerminateTaskClick);
         $('#taskList').change(handleTaskInfoClick);
         $('#taskList').click(handleTaskInfoClick);
@@ -237,6 +247,15 @@ function myFunction() {
         //$("#runTask").attr("disabled", true);
         createResources();
     }
+
+    /*function handleSpinnerClick() {
+       $('.modal').modal('show');
+       setTimeout(function () {
+        console.log('hejsan');
+        $('.modal').modal('hide');
+       }, 3000);
+    }*/
+
 
     function handleTerminateTaskClick(event) {
         var taskscount = $("#taskList").children('option').length;

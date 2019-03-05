@@ -2,9 +2,15 @@
    <head>
       <link rel="stylesheet" type="text/css" href="css/pages.css">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+      <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/d3js/5.7.0/d3.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
       <meta charset="utf-8">
       <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=PT+Serif|Open+Sans:300,400,600,700,800">
       <meta charset="utf-8" />
@@ -34,18 +40,31 @@
          work correctly both with client-side routing and a non-root public URL.
          Learn how to configure a non-root public URL by running `npm run build`.
          -->
+         <script type="text/javascript">
+            function modal(){
+       $('.modal').modal('show');
+       setTimeout(function () {
+        console.log('hejsan');
+        $('.modal').modal('hide');
+       }, 3000);
+    }
+
+         </script>
       <title>Rake Tasks Runner</title>
    </head>
    <body>
       <div id="signing" class="signing">
          <button id="signOut" type="button" class="btn btn-primary btn-sm">Sign Out</button>
       </div>
+
+
       <div class="container px-lg-5">
          <div class="row mx-lg-n5">
             <div class="col py-3 px-lg-5 border bg-light">
                <!--
                   Show tasks
                   -->
+
                <div id="showTaskMainDiv" class="showTaskMainDiv">
                   <h2 class="center"> User Created Tasks </h2>
                   <div  id="stacksdiv">
@@ -56,6 +75,15 @@
                            </select>
                         </div>
                      </div>
+                     <br /><br />
+                     <div class="input-group">
+                       <div class="input-group-prepend">
+                         <span class="input-group-text">Task Details</span>
+                       </div>
+                       <input id='taskcmd' type="text" aria-label="Command" class="form-control">
+                       <input id='taskenv' type="text" aria-label="Environment" class="form-control">
+                     </div>
+                     <div class='options'></div>
                      <br/>
                      <button class="btn"><a id="output" class="fa fa-download"></a> Output</button>
                      <button class="btn"><a id="error" class="fa fa-download"></a> Error</button>
@@ -65,6 +93,18 @@
                   </div>
                   <br/> <br/>
                </div>
+
+               <button type="button" id="spin" class="btn btn-primary">Open and close in 3 secs</button>
+
+               <div class="modal fade bd-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1">
+                   <div class="modal-dialog modal-sm">
+                       <div class="modal-content" style="width: 48px">
+                           <span class="fa fa-spinner fa-spin fa-3x"></span>
+                       </div>
+                   </div>
+               </div>
+
+
             </div>
             <div class="col py-3 px-lg-5 border bg-light">
                <!--
@@ -77,12 +117,13 @@
                      <h3></h3>
                      <br/> 
                      <label for="env"> Environment tag &nbsp;&nbsp;&nbsp;&nbsp;</label>
-                     <input type="text" id="env" value="Environment Tag" >  <br/> <br/>
+                     <!-- <input type="text" id="env" value="Environment Tag" >  <br/> <br/> -->
+                     <input type="text" id="env" value="cron01-qa-centos" >  <br/> <br/> 
                      <br/>
                      <label for="cmd"> Command to Run &nbsp;&nbsp;&nbsp;&nbsp;</label>
                      <select id="cmd" name="commands">
                         <option value='&#39;ls /tmp&#39;'>ls /tmp</option>
-                        <option value='&#39;su - userid -c &#34;cd /tmp/ && ls&#34;&#39;'>su - userid -c "cd /tmp/ && ls"</option>
+                        <option value='&#39;su - deploy -c &#34;cd /srv/websites/qa-centos.trialnetworks.com/current/ && RAILS_ENV=production bundle exec rake routes&#34;&#39;'>bundle exec rake routes</option>
                      </select>
                      <br><br>
                      <button id="runTask" type="submit" class="btn btn-primary my-1">Run Task</button> 
@@ -92,7 +133,7 @@
             </div>
          </div>
       </div>
-      <script src="js/vendor/jquery-3.1.0.js"></script>
+
       <script src="js/vendor/aws-cognito-sdk.min.js"></script>
       <script src="js/vendor/amazon-cognito-identity.min.js"></script>
       <script src="js/config.js"></script>

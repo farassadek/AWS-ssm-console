@@ -58,7 +58,7 @@ div.stackslist {
 }
 
 div.showTaskMainDiv {
-    /*//background-color: lightblue;
+    /*background-color: lightblue;
     background-color: #f2f3f4;
     position: absolute;
     top: 30%;
@@ -70,7 +70,7 @@ div.showTaskMainDiv {
 }
 
 div.runTaskMainDiv {
-    /*//background-color: lightblue;
+    /*background-color: lightblue;
     background-color: #f2f3f4;
     position: absolute;
     top: 30%;
@@ -81,3 +81,14 @@ div.runTaskMainDiv {
     margin-top: -150px;*/
 }
 
+.bd-example-modal-lg .modal-dialog{
+    display: table;
+    position: relative;
+    margin: 0 auto;
+    top: calc(50% - 24px);
+  }
+  
+  .bd-example-modal-lg .modal-dialog .modal-content{
+    background-color: transparent;
+    border: none;
+  }
